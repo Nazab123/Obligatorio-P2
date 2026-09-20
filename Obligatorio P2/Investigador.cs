@@ -15,7 +15,7 @@ namespace Obligatorio_P2
         public Rol Rol { get; set; }
 
         public Investigador (string email, string password, string nombre, Rol rol)
-        {
+        { 
             UltimoId++;
             Id = UltimoId;
 
@@ -27,8 +27,24 @@ namespace Obligatorio_P2
 
         //El sistema registra investigadores de los cuales se conoce un email que debe ser único entre los investigadores
         //Equals
-        //to string para poider mostrar el objeto facilmente
 
+        public override bool Equals(object obj)
+        {
+            // Intento tratar el objeto recibido como un Investigador.
+            // Si no se puede convertir, investigador queda en null.
+            var investigador = obj as Investigador;
+
+            // Dos investigadores se consideran iguales
+            // si tienen el mismo email, ya que el email debe ser único.
+            return investigador != null &&
+                   Email == investigador.Email;
+        }
+        //to string para poider mostrar el objeto facilmente cuando vaya a listar
+
+        public override string ToString()
+        {
+            return $"Id: {Id} - Nombre: {Nombre} - Email: {Email} - Rol: {Rol}";
+        }
 
     }
 }
