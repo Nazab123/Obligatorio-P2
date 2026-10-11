@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Obligatorio_P2
 {
-    internal class Sospechoso
+    public class Sospechoso : IValidable
     {
         public static int UltimoId { get; set; } = 0;
         public int Id { get; set; }
@@ -23,6 +23,18 @@ namespace Obligatorio_P2
             Nacimiento = nacimiento;
             Antecedentes = antecedentes;
         }
+
+        public void Validar()
+        {
+            if (string.IsNullOrEmpty(Nombre)){
+                throw new Exception("El nombre del sospechoso no puede estar vacío");
+            }
+
+            if (string.IsNullOrEmpty(Cedula)){
+                throw new Exception("La cédula del sospechoso no puede estar vacía");
+            }
+        }
+
 
         //metodos
 

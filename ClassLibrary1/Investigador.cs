@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Obligatorio_P2
 {
-    internal class Investigador
+    public class Investigador : IValidable
     {
         public static int UltimoId { get; set; } = 0;
 
@@ -24,6 +24,20 @@ namespace Obligatorio_P2
             Nombre = nombre;
             Rol = rol;
         }
+
+        public void Validar()
+        {
+            if (string.IsNullOrEmpty(Email)){
+                throw new Exception("El email no puede estar vacío");
+            }
+            if (string.IsNullOrEmpty(Password)){
+                throw new Exception("La contraseña no puede estar vacía");
+            }
+            if (string.IsNullOrEmpty(Nombre)){
+                throw new Exception("El nombre no puede estar vacío");
+            }
+        }
+
 
         //El sistema registra investigadores de los cuales se conoce un email que debe ser único entre los investigadores
         //Equals

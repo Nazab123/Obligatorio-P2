@@ -8,4 +8,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\Obligatorio_P2_Dominio.csproj" />
+  </ItemGroup>
+
 </Project>
