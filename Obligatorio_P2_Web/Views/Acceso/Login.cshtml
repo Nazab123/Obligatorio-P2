@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+
+            <h2 class="text-center mb-4">
+                Inicio de sesión
+            </h2>
+
+            <form asp-controller="Acceso"
+                  asp-action="Login"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">
+                        Email
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           class="form-control"
+                           required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="contrasena" class="form-label">
+                        Contraseña
+                    </label>
+
+                    <input type="password"
+                           id="contrasena"
+                           name="contrasena"
+                           class="form-control"
+                           required />
+                </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
