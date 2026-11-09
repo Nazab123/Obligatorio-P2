@@ -1,22 +1,23 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Obligatorio_P2
 {
-    // Se declara la clase como public para que pueda ser utilizada
-    // desde el proyecto de consola, ya que pertenece al proyecto de dominio.
-
     public class Caso : IValidable
-    {//caso de compromete a usar el metood validar ()
+    {
         private static int UltimoId { get; set; } = 0;
+
         public int Id { get; private set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public Boolean Cerrado { get; set; }
+        public bool Cerrado { get; set; }
         public Sospechoso Sospechoso { get; set; }
         public Investigador Detective { get; set; }
-        public List<Evidencia> Evidencias { get; private set; }
+
+        // Lista privada para respetar el encapsulamiento
+        private List<Evidencia> _evidencias;
+
         public Caso(string nombre, string descripcion, bool cerrado,
             Sospechoso sospechoso, Investigador detective)
         {
@@ -29,41 +30,39 @@ namespace Obligatorio_P2
             Sospechoso = sospechoso;
             Detective = detective;
 
-            // Inicializo la lista para que el caso pueda almacenar evidencias
-            Evidencias = new List<Evidencia>();
+            // Inicializamos la lista de evidencias
+            _evidencias = new List<Evidencia>();
         }
 
-        //Cree la validar con sus validaciones segun la eltra
         public void Validar()
         {
-           
-            if (string.IsNullOrEmpty(Nombre)){
+            if (string.IsNullOrEmpty(Nombre))
+            {
                 throw new Exception("El nombre del caso no puede estar vacío");
             }
 
-           
-            if (string.IsNullOrEmpty(Descripcion)){
+            if (string.IsNullOrEmpty(Descripcion))
+            {
                 throw new Exception("La descripción del caso no puede estar vacía");
             }
 
-            
-            if (Sospechoso == null){
+            if (Sospechoso == null)
+            {
                 throw new Exception("El caso debe tener un sospechoso");
             }
 
-            
-            if (Detective == null){
+            if (Detective == null)
+            {
                 throw new Exception("El caso debe tener un detective");
             }
 
-            
-            if (Detective.Rol != Rol.DETECTIVE){
+            if (Detective.Rol != Rol.DETECTIVE)
+            {
                 throw new Exception("El investigador asignado debe tener rol DETECTIVE");
             }
         }
 
-
-
+        // Agrega evidencias realizando las validaciones
         public void AgregarEvidencia(Evidencia e)
         {
             if (e == null)
@@ -73,19 +72,23 @@ namespace Obligatorio_P2
 
             e.Validar();
 
-            if (Evidencias.Contains(e))
+            if (_evidencias.Contains(e))
             {
                 throw new Exception("La evidencia ya está asociada al caso");
             }
 
-            Evidencias.Add(e);
+            _evidencias.Add(e);
         }
 
+        // Devuelve una copia de la lista de evidencias
+        public List<Evidencia> ObtenerEvidencias()
+        {
+            return new List<Evidencia>(_evidencias);
+        }
 
         public override string ToString()
         {
             return $"Id: {Id} - Nombre: {Nombre} - Descripción: {Descripcion} - Cerrado: {Cerrado}";
         }
-
     }
 }

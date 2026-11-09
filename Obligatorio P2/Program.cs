@@ -61,6 +61,7 @@ namespace Obligatorio_P2
         }
 
 
+
         static void ListarCasos()
         {
             List<Caso> casos = sistema.ListarCasos();
@@ -75,18 +76,19 @@ namespace Obligatorio_P2
                 {
                     Console.WriteLine(c.ToString());
 
-                    if (c.Evidencias.Count == 0)
+                    // Obtenemos las evidencias mediante el metodo publico
+                    List<Evidencia> evidencias = c.ObtenerEvidencias();
+
+                    if (evidencias.Count == 0)
                     {
                         Console.WriteLine("Este caso no tiene evidencias");
                     }
                     else
                     {
-
-                        foreach (Evidencia e in c.Evidencias)
+                        foreach (Evidencia e in evidencias)
                         {
                             Console.WriteLine($"ID: {e.Id} - Descripción: {e.Descripcion}");
                         }
-
                     }
                 }
             }

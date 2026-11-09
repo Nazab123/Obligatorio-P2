@@ -53,19 +53,19 @@ namespace Obligatorio_P2
         private void PrecargarFisica(Caso caso, int diasAtras, string descripcion, bool huellas)
         {
             Fisica e = new Fisica(DateTime.Today.AddDays(-diasAtras), DateTime.Today, descripcion, huellas);
-            AgregarEvidenciaACaso(caso.Id, e);
+            AltaEvidencia(caso, e);
         }
 
         private void PrecargarGrabacion(Caso caso, int diasAtras, string descripcion, int calidad, bool infraganti)
         {
             Grabacion e = new Grabacion(DateTime.Today.AddDays(-diasAtras), DateTime.Today, descripcion, calidad, infraganti);
-            AgregarEvidenciaACaso(caso.Id, e);
+            AltaEvidencia(caso, e);
         }
 
         private void PrecargarTestimonio(Caso caso, int diasAtras, string descripcion, string testigo, Credibilidad credibilidad)
         {
             Testimonio e = new Testimonio(DateTime.Today.AddDays(-diasAtras), DateTime.Today, descripcion, testigo, credibilidad);
-            AgregarEvidenciaACaso(caso.Id, e);
+            AltaEvidencia(caso, e);
         }
 
 
@@ -230,24 +230,29 @@ namespace Obligatorio_P2
 
 
 
-        public void AltaCaso(Caso c){
-            if (c == null){
+        public void AltaCaso(Caso c)
+        {
+            if (c == null)
+            {
                 throw new Exception("El caso no puede ser nulo");
             }
 
             c.Validar();
 
-            if (!_investigadores.Contains(c.Detective)){
+            if (!_investigadores.Contains(c.Detective))
+            {
                 throw new Exception("El detective no está registrado en el sistema");
             }
 
-            if (!_sospechosos.Contains(c.Sospechoso)){
+            if (!_sospechosos.Contains(c.Sospechoso))
+            {
                 throw new Exception("El sospechoso no está registrado en el sistema");
             }
 
             foreach (Caso caso in _casos)
             {
-                if (caso.Id == c.Id){
+                if (caso.Id == c.Id)
+                {
                     throw new Exception("Ya existe un caso con ese ID");
                 }
             }
@@ -259,63 +264,57 @@ namespace Obligatorio_P2
 
         public void AltaInvestigador(Investigador i)
         {
-            if (i == null){
+            if (i == null)
+            {
                 throw new Exception("El investigador no puede ser nulo");
             }
 
             i.Validar();
 
-            if (_investigadores.Contains(i)){
+            if (_investigadores.Contains(i))
+            {
                 throw new Exception("Ya existe un investigador con ese email");
             }
 
-            
+
             _investigadores.Add(i);
         }
 
         public void AltaSospechoso(Sospechoso s)
         {
-            if (s == null){
+            if (s == null)
+            {
                 throw new Exception("El sospechoso no puede ser nulo");
             }
 
             s.Validar();
-            if (_sospechosos.Contains(s)){
+            if (_sospechosos.Contains(s))
+            {
                 throw new Exception("Ya existe un sospechoso con esa cédula");
             }
 
             _sospechosos.Add(s);
         }
 
-
-        public Caso BuscarCasoPorId(int id)
+        public void AltaEvidencia(Caso caso, Evidencia evidencia)
         {
-            
-            foreach (Caso c in _casos){
-                
-                if (c.Id == id)
-                {
-                    return c;
-                }
+            if (caso == null)
+            {
+                throw new Exception("El caso no puede ser nulo");
             }
 
-            
-            return null;
-        }
-
-        public void AgregarEvidenciaACaso(int idCaso, Evidencia e)
-        {
-            
-            Caso c = BuscarCasoPorId(idCaso);
-            if (c == null){
-                throw new Exception("No existe un caso con ese ID");
+            if (!_casos.Contains(caso))
+            {
+                throw new Exception("El caso no está registrado en el sistema");
             }
 
-            if (e == null){
+            if (evidencia == null)
+            {
                 throw new Exception("La evidencia no puede ser nula");
             }
-            e.Validar();
-            c.AgregarEvidencia(e);
+
+            evidencia.Validar();
+            caso.AgregarEvidencia(evidencia);
         }
 
 
@@ -355,12 +354,25 @@ namespace Obligatorio_P2
 
             return sospechososConAntecedentes;
         }
+        //Agrego esto para el login , es un metodo para loguearse 
+        public Investigador IniciarSesion(string email, string contrasena)
+        {
+            foreach (Investigador investigador in _investigadores)
+            {
+                if (investigador.Email == email &&
+                    investigador.Password == contrasena)
+                {
+                    return investigador;
+                }
+            }
 
+            return null;
+        }
+    }
+    
+        
 
 
 
 
     }
-
-
-}

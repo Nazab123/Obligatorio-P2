@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="ClassLibrary1/Obligatorio_P2_Dominio.csproj" Id="edbd1392-3e5b-4035-844e-494b2b7553bb" />
   <Project Path="Obligatorio P2/Obligatorio P2.csproj" />
+  <Project Path="Obligatorio_P2_Web/Obligatorio_P2_Web.csproj" Id="9c73c871-c815-4337-868e-f858cc7ebcae" />
 </Solution>
