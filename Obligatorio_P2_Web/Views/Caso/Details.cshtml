@@ -1,0 +1,64 @@
+﻿@using Obligatorio_P2
+@model Caso
+
+@{
+    ViewData["Title"] = "Detalles del caso";
+    List<Evidencia> evidencias = Model.ObtenerEvidencias();
+}
+
+<h2>@Model.Nombre</h2>
+
+<p><strong>ID:</strong> @Model.Id</p>
+<p><strong>Descripción:</strong> @Model.Descripcion</p>
+<p><strong>Sospechoso:</strong> @Model.Sospechoso.Nombre</p>
+<p><strong>Cédula:</strong> @Model.Sospechoso.Cedula</p>
+<p><strong>Detective:</strong> @Model.Detective.Nombre</p>
+
+@if (Model.Cerrado)
+{
+    <p><strong>Estado:</strong> Cerrado</p>
+}
+else
+{
+    <p><strong>Estado:</strong> Abierto</p>
+}
+
+<h3>Evidencias</h3>
+
+@if (evidencias.Count == 0)
+{
+    <p>Este caso no tiene evidencias registradas.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Datos de la evidencia</th>
+                <th>Fecha de recolección</th>
+                <th>Puntos</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (Evidencia evidencia in evidencias)
+            {
+                <tr>
+                    <td>@evidencia.ToString()</td>
+                    <td>@evidencia.Fecha.ToShortDateString()</td>
+                    <td>@evidencia.CalcularPuntos()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h3>Recomendación</h3>
+
+<p><strong>Peso total:</strong> @Model.CalcularPeso() / 100</p>
+
+<p>@Model.GenerarRecomendacion()</p>
+
+<a asp-controller="Caso" asp-action="Index" class="btn btn-secondary">
+    Volver al listado
+</a>

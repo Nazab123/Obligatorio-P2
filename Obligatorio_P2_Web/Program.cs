@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Agregamos los servicios necesarios para MVC
 builder.Services.AddControllersWithViews();
 
+// Configuramos la sesión
+builder.Services.AddSession();
+
 // Obtenemos la unica instancia de Sistema
 Sistema sistema = Sistema.ObtenerInstancia();
 
@@ -35,12 +38,18 @@ app.UseStaticFiles();
 // Configuracion de rutas
 app.UseRouting();
 
+// Habilitamos la sesión para las solicitudes
+app.UseSession();
+
 // Autorizacion
 app.UseAuthorization();
+
+// Utilizamos Session en la aplicación
+app.UseSession();
 
 // Ruta predeterminada de MVC
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Acceso}/{action=Login}/{id?}");
 
 app.Run();

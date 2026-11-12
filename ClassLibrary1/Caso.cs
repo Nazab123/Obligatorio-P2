@@ -90,5 +90,52 @@ namespace Obligatorio_P2
         {
             return $"Id: {Id} - Nombre: {Nombre} - Descripción: {Descripcion} - Cerrado: {Cerrado}";
         }
+
+        public int CalcularPeso()
+        {
+            int peso = 0;
+
+            foreach (Evidencia evidencia in _evidencias)
+            {
+                peso += evidencia.CalcularPuntos();
+            }
+
+            if (Sospechoso.Antecedentes)
+            {
+                peso += 10;
+            }
+
+            if (peso > 100)
+            {
+                peso = 100;
+            }
+
+            return peso;
+        }
+
+        public string GenerarRecomendacion()
+        {
+            int peso = CalcularPeso();
+
+            if (peso < 30)
+            {
+                return $"DESESTIMADO: El caso {Nombre} carece de fundamentos. " +
+                       $"El peso de la prueba es {peso} y debería ser desestimado " +
+                       $"finalizando la investigación en contra de {Sospechoso.Nombre}.";
+            }
+            else if (peso <= 70)
+            {
+                return $"CONTINUAR INVESTIGANDO: El caso \"{Nombre}\" parece ir " +
+                       $"por el camino correcto, pero necesita más investigación. " +
+                       $"El peso de la prueba es {peso} pero aún no hay información " +
+                       $"suficiente para imputar a {Sospechoso.Nombre}.";
+            }
+            else
+            {
+                return $"IMPUTACIÓN INMINENTE: El caso \"{Nombre}\" está resuelto. " +
+                       $"El peso de la prueba es {peso} y debería imputarse a " +
+                       $"{Sospechoso.Nombre} inmediatamente.";
+            }
+        }
     }
 }

@@ -20,12 +20,71 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">
+                                Inicio
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                        @if (Context.Session.GetInt32("IdLogueado") == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Acceso" asp-action="Login">
+                                    Iniciar sesión
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Acceso" asp-action="Registro">
+                                    Registrarse
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            if (Context.Session.GetString("RolLogueado") == "DETECTIVE")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Caso" asp-action="MisCasos">
+                                        Mis casos
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Sospechoso" asp-action="Index">
+                                        Sospechosos
+                                    </a>
+                                </li>
+                            }
+                            else if (Context.Session.GetString("RolLogueado") == "FISCAL")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Caso" asp-action="Create">
+                                        Crear caso
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Caso" asp-action="Index">
+                                        Todos los casos
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Acceso" asp-action="Perfil">
+                                    Mi perfil
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Acceso" asp-action="Logout">
+                                    Cerrar sesión
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

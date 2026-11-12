@@ -368,11 +368,82 @@ namespace Obligatorio_P2
 
             return null;
         }
+        public Investigador BuscarInvestigadorPorId(int id)
+        {
+            foreach (Investigador investigador in _investigadores)
+            {
+                if (investigador.Id == id)
+                {
+                    return investigador;
+                }
+            }
+
+            return null;
+        }
+
+        public List<Sospechoso> ListarSospechosos()
+        {
+            return new List<Sospechoso>(_sospechosos);
+        }
+
+        public List<Sospechoso> FiltrarSospechososPorEdad(int edad)
+        {
+            List<Sospechoso> resultado = new List<Sospechoso>();
+
+            foreach (Sospechoso sospechoso in _sospechosos)
+            {
+                if (sospechoso.CalcularEdad() > edad)
+                {
+                    resultado.Add(sospechoso);
+                }
+            }
+
+            return resultado;
+        }
+
+        public Caso BuscarCasoPorId(int id)
+        {
+            foreach (Caso caso in _casos)
+            {
+                if (caso.Id == id)
+                {
+                    return caso;
+                }
+            }
+
+            return null;
+        }
+
+        public List<Investigador> ListarDetectives()
+        {
+            List<Investigador> detectives = new List<Investigador>();
+
+            foreach (Investigador investigador in _investigadores)
+            {
+                if (investigador.Rol == Rol.DETECTIVE)
+                {
+                    detectives.Add(investigador);
+                }
+            }
+
+            return detectives;
+        }
+
+        public Sospechoso BuscarSospechosoPorId(int id)
+        {
+            foreach (Sospechoso sospechoso in _sospechosos)
+            {
+                if (sospechoso.Id == id)
+                {
+                    return sospechoso;
+                }
+            }
+
+            return null;
+        }
+
+
+
     }
-    
-        
 
-
-
-
-    }
+}

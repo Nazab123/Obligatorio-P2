@@ -1,0 +1,49 @@
+﻿@using Obligatorio_P2
+@model List<Caso>
+
+@{
+    ViewData["Title"] = "Mis casos";
+}
+
+<h2>Mis casos</h2>
+
+@if (Model.Count == 0)
+{
+    <p>No tenés casos asignados.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Sospechoso</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (Caso caso in Model)
+            {
+                <tr>
+                    <td>@caso.Id</td>
+                    <td>@caso.Nombre</td>
+                    <td>@caso.Descripcion</td>
+                    <td>@caso.Sospechoso.Nombre</td>
+                    <td>
+                        @if (caso.Cerrado)
+                        {
+                            <span>Cerrado</span>
+                        }
+                        else
+                        {
+                            <span>Abierto</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
