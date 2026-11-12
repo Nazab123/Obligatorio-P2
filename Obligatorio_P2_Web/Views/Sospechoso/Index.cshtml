@@ -1,0 +1,82 @@
+﻿@using Obligatorio_P2
+@model List<Sospechoso>
+
+@{
+    ViewData["Title"] = "Sospechosos";
+}
+
+<h2>Sospechosos</h2>
+
+<form asp-controller="Sospechoso" asp-action="Index" method="get">
+
+    <label for="edad">Mostrar sospechosos mayores de:</label>
+
+    <input type="number"
+           id="edad"
+           name="edad"
+           value="@ViewBag.Edad"
+           min="0"
+           step="1" />
+
+    <button type="submit" class="btn btn-primary">
+        Filtrar
+    </button>
+
+    <a asp-controller="Sospechoso"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Ver todos
+    </a>
+
+</form>
+
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+else if (Model.Count == 0)
+{
+    <p>No hay sospechosos para mostrar.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Nacimiento</th>
+                <th>Edad</th>
+                <th>Antecedentes</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (Sospechoso sospechoso in Model)
+            {
+                <tr>
+                    <td>@sospechoso.Id</td>
+                    <td>@sospechoso.Nombre</td>
+                    <td>@sospechoso.Cedula</td>
+                    <td>@sospechoso.Nacimiento.ToShortDateString()</td>
+                    <td>@sospechoso.CalcularEdad()</td>
+                    <td>
+                        @if (sospechoso.Antecedentes)
+                        {
+                            <span>Sí</span>
+                        }
+                        else
+                        {
+                            <span>No</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

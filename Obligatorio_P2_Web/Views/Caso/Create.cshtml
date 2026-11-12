@@ -1,0 +1,111 @@
+﻿@using Obligatorio_P2
+
+@{
+    ViewData["Title"] = "Crear caso";
+}
+
+<h1>Crear caso</h1>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<form method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+
+        <input type="text"
+               id="nombre"
+               name="nombre"
+               class="form-control"
+               value="@ViewBag.Nombre"
+               required />
+    </div>
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">
+            Descripción
+        </label>
+
+        <textarea id="descripcion"
+                  name="descripcion"
+                  class="form-control"
+                  rows="3"
+                  required>@ViewBag.Descripcion</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="idSospechoso" class="form-label">
+            Sospechoso
+        </label>
+
+        <select id="idSospechoso"
+                name="idSospechoso"
+                class="form-select"
+                required>
+
+            <option value="">Seleccioná un sospechoso</option>
+
+            @foreach (Sospechoso sospechoso in ViewBag.Sospechosos)
+            {
+                if (ViewBag.IdSospechoso == sospechoso.Id)
+                {
+                    <option value="@sospechoso.Id" selected>
+                        @sospechoso.Nombre — @sospechoso.Cedula
+                    </option>
+                }
+                else
+                {
+                    <option value="@sospechoso.Id">
+                        @sospechoso.Nombre — @sospechoso.Cedula
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="idDetective" class="form-label">
+            Detective
+        </label>
+
+        <select id="idDetective"
+                name="idDetective"
+                class="form-select"
+                required>
+
+            <option value="">Seleccioná un detective</option>
+
+            @foreach (Investigador detective in ViewBag.Detectives)
+            {
+                if (ViewBag.IdDetective == detective.Id)
+                {
+                    <option value="@detective.Id" selected>
+                        @detective.Nombre — @detective.Email
+                    </option>
+                }
+                else
+                {
+                    <option value="@detective.Id">
+                        @detective.Nombre — @detective.Email
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Crear caso
+    </button>
+
+    <a asp-controller="Caso"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Volver al listado
+    </a>
+</form>

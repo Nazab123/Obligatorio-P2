@@ -3,6 +3,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <div>
+        <h2>Inicio</h2>
+
+        <p>ID: @Context.Session.GetInt32("IdLogueado")</p>
+        <p>Email: @Context.Session.GetString("EmailLogueado")</p>
+        <p>Rol: @Context.Session.GetString("RolLogueado")</p>
+    </div>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

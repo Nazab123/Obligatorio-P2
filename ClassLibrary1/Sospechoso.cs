@@ -66,5 +66,21 @@ namespace Obligatorio_P2
             return $"Nombre: {Nombre} - Cédula: {Cedula} - Fecha de nacimiento: {Nacimiento.ToShortDateString()} - Antecedentes: {Antecedentes}";
         }
 
+        public int CalcularEdad()
+        {
+            DateTime hoy = DateTime.Today;
+
+            int edad = hoy.Year - Nacimiento.Year;
+
+            // Si todavía no cumplió años, restamos uno
+            if (hoy.Month < Nacimiento.Month ||
+                (hoy.Month == Nacimiento.Month && hoy.Day < Nacimiento.Day))
+            {
+                edad--;
+            }
+
+            return edad;
+        }
+
     }
 }
