@@ -414,33 +414,52 @@ namespace Obligatorio_P2
             return null;
         }
 
+
         public List<Investigador> ListarDetectives()
         {
             List<Investigador> detectives = new List<Investigador>();
 
-            foreach (Investigador investigador in _investigadores)
+            foreach (Investigador i in _investigadores)
             {
-                if (investigador.Rol == Rol.DETECTIVE)
+                if (i.Rol == Rol.DETECTIVE)
                 {
-                    detectives.Add(investigador);
+                    detectives.Add(i);
+                }
+            }
+
+            // Ordenar detectives por nombre ascendente
+            for (int i = 0; i < detectives.Count - 1; i++)
+            {
+                for (int j = i + 1; j < detectives.Count; j++)
+                {
+                    if (string.Compare(detectives[i].Nombre,
+                        detectives[j].Nombre, true) > 0)
+                    {
+                        Investigador auxiliar = detectives[i];
+                        detectives[i] = detectives[j];
+                        detectives[j] = auxiliar;
+                    }
                 }
             }
 
             return detectives;
         }
 
+
         public Sospechoso BuscarSospechosoPorId(int id)
         {
-            foreach (Sospechoso sospechoso in _sospechosos)
+            foreach (Sospechoso s in _sospechosos)
             {
-                if (sospechoso.Id == id)
+                if (s.Id == id)
                 {
-                    return sospechoso;
+                    return s;
                 }
             }
 
             return null;
         }
+
+
 
 
 
