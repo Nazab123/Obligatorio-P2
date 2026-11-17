@@ -35,7 +35,7 @@ namespace Obligatorio_P2
             {
                 puntos += 60;
             }
-
+            ///modificar
             if (Calidad >= 3)
             {
                 puntos += 10;
