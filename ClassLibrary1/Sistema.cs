@@ -323,7 +323,6 @@ namespace Obligatorio_P2
             return new List<Caso>(_casos);
         }
 
-
         public List<Caso> BuscarCasosPorInvestigador(string email)
         {
             List<Caso> casosInvestigador = new List<Caso>();
@@ -336,8 +335,13 @@ namespace Obligatorio_P2
                 }
             }
 
+            // Ordenamos por nombre ascendente
+            casosInvestigador.Sort();
+
             return casosInvestigador;
         }
+
+
 
 
         public List<Sospechoso> ListarSospechososConAntecedentes()
@@ -427,20 +431,7 @@ namespace Obligatorio_P2
                 }
             }
 
-            // Ordenar detectives por nombre ascendente
-            for (int i = 0; i < detectives.Count - 1; i++)
-            {
-                for (int j = i + 1; j < detectives.Count; j++)
-                {
-                    if (string.Compare(detectives[i].Nombre,
-                        detectives[j].Nombre, true) > 0)
-                    {
-                        Investigador auxiliar = detectives[i];
-                        detectives[i] = detectives[j];
-                        detectives[j] = auxiliar;
-                    }
-                }
-            }
+            detectives.Sort();
 
             return detectives;
         }

@@ -44,9 +44,6 @@ app.UseSession();
 // Autorizacion
 app.UseAuthorization();
 
-// Utilizamos Session en la aplicación
-app.UseSession();
-
 // Ruta predeterminada de MVC
 app.MapControllerRoute(
     name: "default",

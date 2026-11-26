@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Obligatorio_P2
 {
-    public class Caso : IValidable
+    public class Caso : IValidable, IComparable<Caso>
     {
         private static int UltimoId { get; set; } = 0;
 
@@ -89,6 +89,16 @@ namespace Obligatorio_P2
         public override string ToString()
         {
             return $"Id: {Id} - Nombre: {Nombre} - Descripción: {Descripcion} - Cerrado: {Cerrado}";
+        }
+
+        public int CompareTo(Caso otro)
+        {
+            if (otro == null)
+            {
+                return 1;
+            }
+
+            return string.Compare(Nombre, otro.Nombre, true);
         }
 
         public int CalcularPeso()

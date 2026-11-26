@@ -46,16 +46,14 @@ namespace Obligatorio_P2
             }
         }
 
-
-
-
-        //Cambiar este metodo por cosas que usamos 
-
         public virtual int CalcularPuntos()
         {
             int puntos = 0;
 
-            if (Fecha > DateTime.Today.AddMonths(-6))
+            int meses = (DateTime.Today.Year - Fecha.Year) * 12
+                      + (DateTime.Today.Month - Fecha.Month);
+
+            if (meses < 6 || (meses == 6 && Fecha.Day > DateTime.Today.Day))
             {
                 puntos = 5;
             }

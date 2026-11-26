@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Obligatorio_P2
 {
-    public class Investigador : IValidable
+    public class Investigador : IValidable, IComparable<Investigador>
     {
         private static int UltimoId { get; set; } = 0;
         public int Id { get; private set; }
@@ -24,19 +24,29 @@ namespace Obligatorio_P2
             Rol = rol;
         }
 
+
         public void Validar()
         {
-            if (string.IsNullOrEmpty(Email)){
+            if (string.IsNullOrEmpty(Email) || Email.Trim() == "")
+            {
                 throw new Exception("El email no puede estar vacío");
             }
-            if (string.IsNullOrEmpty(Password)){
+
+            if (string.IsNullOrEmpty(Password) || Password.Trim() == "")
+            {
                 throw new Exception("La contraseña no puede estar vacía");
             }
-            if (string.IsNullOrEmpty(Nombre)){
+
+            if (string.IsNullOrEmpty(Nombre) || Nombre.Trim() == "")
+            {
                 throw new Exception("El nombre no puede estar vacío");
             }
-        }
 
+            if (Rol != Rol.DETECTIVE && Rol != Rol.FISCAL)
+            {
+                throw new Exception("El rol del investigador no es válido");
+            }
+        }
 
         //El sistema registra investigadores de los cuales se conoce un email que debe ser único entre los investigadores
         //Equals
@@ -52,6 +62,17 @@ namespace Obligatorio_P2
             return investigador != null &&
                    Email == investigador.Email;
         }
+
+        public int CompareTo(Investigador otro)
+        {
+            if (otro == null)
+            {
+                return 1;
+            }
+
+            return string.Compare(Nombre, otro.Nombre, true);
+        }
+
         //to string para poider mostrar el objeto facilmente cuando vaya a listar
 
         public override string ToString()
